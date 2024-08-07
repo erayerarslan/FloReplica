@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "953748757524",
+    "project_id": "floreplica",
+    "storage_bucket": "floreplica.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:953748757524:android:f7bb35dcf2531bf1c05b01",
+        "android_client_info": {
+          "package_name": "com.erayerarslan.floreplica"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkvVryf9BkxGs7UZ_t2maNYxBDRPfUYj0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
