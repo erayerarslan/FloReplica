@@ -28,7 +28,7 @@ class SignInViewModel @Inject constructor(
                     }
                     is Response.Success -> {
                         _signInState.value = Response.Success("Sign-in successful")
-                }
+                    }
 
                     is Response.Error -> {
                         _signInState.value = Response.Error(it.message)

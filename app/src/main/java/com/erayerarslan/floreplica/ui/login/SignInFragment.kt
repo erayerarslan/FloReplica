@@ -62,6 +62,7 @@ class SignInFragment : Fragment() {
             viewModel.signInState.collect { response ->
                 when (response) {
                     is Response.Loading -> {
+
                         Log.d("SignInFragment", "Loading state")
                     }
 

@@ -19,13 +19,14 @@ class AuthenticationRepositoryImpl @Inject constructor(
 
 
     override suspend fun userUid(): String = auth.currentUser?.uid ?: ""
+    override suspend fun userEmail(): String = auth.currentUser?.email ?: ""
 
     override suspend fun isLoggedIn(): Boolean = auth.currentUser == null
 
     override suspend fun logout() = auth.signOut()
 
     override suspend fun login(email: String, password: String): Flow<Response<AuthResult>> = flow {
-        println("Login function called")
+
         try {
             emit(Response.Loading)
             val data = auth.signInWithEmailAndPassword(email, password).await()
