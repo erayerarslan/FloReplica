@@ -4,6 +4,12 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     alias(libs.plugins.google.gms.google.services)
 
+
+    alias(libs.plugins.daggerHilt)
+    alias(libs.plugins.org.jetbrains.kotlin.kapt)
+
+
+
 }
 
 android {
@@ -38,8 +44,12 @@ android {
     }
     buildFeatures {
         viewBinding = true
+
     }
+
+
 }
+
 
 dependencies {
 
@@ -52,6 +62,16 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+
+
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.navigation.compose)
+    implementation(libs.hilt.navigation.compose)
+
+
 
     //Nav
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
@@ -83,4 +103,12 @@ dependencies {
     implementation("com.google.firebase:firebase-database:21.0.0")
     implementation("com.google.firebase:firebase-storage:21.0.0")
 
+
+
+
+
+}
+
+kapt {
+    correctErrorTypes = true
 }

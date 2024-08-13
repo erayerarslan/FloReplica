@@ -65,16 +65,16 @@
 
     <Button
         android:id="@+id/btnProfileHome"
-        android:layout_width="96dp"
-        android:layout_height="44dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="45dp"
-        android:text="Button"
+        android:text="Bilgi Güncelleme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewLastName"
-        app:layout_constraintVertical_bias="0.142" />
+        app:layout_constraintVertical_bias="0.5" />
 
     <TextView
         android:id="@+id/textViewStaticEmail"

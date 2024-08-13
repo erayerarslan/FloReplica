@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.erayerarslan.floreplica.R
 import com.erayerarslan.floreplica.databinding.FragmentHomeBinding
 import com.erayerarslan.floreplica.databinding.FragmentProfileBinding
@@ -15,8 +16,9 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
@@ -45,7 +47,7 @@ class ProfileFragment : Fragment() {
         val uid= firebaseAuth.currentUser?.uid
         val email= firebaseAuth.currentUser?.email
         binding.btnSaveProfile.setOnClickListener {
-            println("butona basildi")
+
             val firstName=binding.editTextName.text.toString()
             val lastName=binding.editTextLastName.text.toString()
             val user= User(firstName,lastName,email)
@@ -63,7 +65,7 @@ class ProfileFragment : Fragment() {
                 }
 
             }
-
+            findNavController().popBackStack()
 
         }
     }
