@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.erayerarslan.floreplica.MainActivity
 import com.erayerarslan.floreplica.R
 import com.erayerarslan.floreplica.databinding.FragmentHomeBinding
@@ -15,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private lateinit var productAdapter: ProductAdapter
     private val viewModel by viewModels<HomeViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,9 +34,40 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         (activity as? MainActivity)?.showBottomNavigationView()
-        viewModel.getProductList()
+
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        productAdapter = ProductAdapter()
+        binding.homeRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.homeRecyclerView.adapter = productAdapter
+
+
+
+        observeEvents()
+
+        viewModel.getProductList()
+    }
+
+    private fun observeEvents() {
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) { error->
+            binding.textViewHomeError.text = error
+            binding.textViewHomeError.isVisible = true
+        }
+        viewModel.isLoading.observe(viewLifecycleOwner){ loading ->
+            binding.progressBar.isVisible = loading
+        }
+
+        viewModel.productList.observe(viewLifecycleOwner) { productList ->
+            if (productList != null) {
+                productAdapter.updateProductList(productList)
+            }
+        }
+
     }
 
     override fun onDestroyView() {

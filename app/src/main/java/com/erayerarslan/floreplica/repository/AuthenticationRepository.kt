@@ -16,6 +16,7 @@ interface AuthenticationRepository {
     suspend fun logout()
 
     suspend fun userUid(): String
+
     suspend fun userEmail(): String
 
     suspend fun isLoggedIn(): Boolean
