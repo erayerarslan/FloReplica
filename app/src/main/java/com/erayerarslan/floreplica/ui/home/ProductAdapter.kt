@@ -9,10 +9,6 @@ import com.erayerarslan.floreplica.databinding.ProductHomeRecyclerviewBinding
 import com.erayerarslan.floreplica.model.ProductItem
 import com.erayerarslan.floreplica.util.loadImage
 
-
-
-
-
 class ProductAdapter :
     RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
     private var productList: MutableList<ProductItem> = mutableListOf()

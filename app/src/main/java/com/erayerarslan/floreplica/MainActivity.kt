@@ -1,7 +1,9 @@
 package com.erayerarslan.floreplica
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.window.OnBackInvokedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -26,11 +28,15 @@ class MainActivity : AppCompatActivity() {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
+
         setContentView(binding.root)
 
         createBottomNavigation()
 
+
     }
+
+
     private fun createBottomNavigation() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         NavigationUI.setupWithNavController(binding.bottomNavigation,navHostFragment.navController)

@@ -52,4 +52,9 @@
             android:id="@+id/action_profileHomeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.erayerarslan.floreplica.ui.category.CategoryFragment"
+        android:label="fragment_category"
+        tools:layout="@layout/fragment_category" />
 </navigation>

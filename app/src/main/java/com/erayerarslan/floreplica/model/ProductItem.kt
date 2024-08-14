@@ -14,6 +14,6 @@ data class ProductItem(
     val title: String?,
     @SerializedName("image")
     val image: String?,
-   // @SerializedName("category")
-   // val category: String?
+    @SerializedName("category")
+    val category: String?
 )

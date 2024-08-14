@@ -1,4 +1,4 @@
-package com.erayerarslan.floreplica.ui.home
+package com.erayerarslan.floreplica.ui.category
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,20 +7,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.erayerarslan.floreplica.MainActivity
 import com.erayerarslan.floreplica.R
+import com.erayerarslan.floreplica.databinding.FragmentCategoryBinding
 import com.erayerarslan.floreplica.databinding.FragmentHomeBinding
+import com.erayerarslan.floreplica.databinding.FragmentSignInBinding
+import com.erayerarslan.floreplica.ui.home.HomeViewModel
+import com.erayerarslan.floreplica.ui.home.ProductAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
-    private var _binding: FragmentHomeBinding? = null
+class CategoryFragment : Fragment() {
+    private var _binding: FragmentCategoryBinding? = null
     private val binding get() = _binding!!
+    private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var productAdapter: ProductAdapter
-    private val viewModel by viewModels<HomeViewModel>()
+    private val viewModel by viewModels<CategoryViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,30 +33,21 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        (activity as? MainActivity)?.showBottomNavigationView()
-
-
+        _binding = FragmentCategoryBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        productAdapter = ProductAdapter()
-        val gridLayoutManager = GridLayoutManager(requireContext(), 2)
-        binding.homeRecyclerView.layoutManager = gridLayoutManager
-        binding.homeRecyclerView.adapter = productAdapter
+        binding.categoryRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        categoryAdapter = CategoryAdapter(emptyList())
+        binding.categoryRecyclerView.adapter = categoryAdapter
 
-
-
+        viewModel.getCategoryList()
         observeEvents()
 
-        viewModel.getProductList()
     }
-
     private fun observeEvents() {
 
         viewModel.errorMessage.observe(viewLifecycleOwner) { error->
@@ -65,17 +58,18 @@ class HomeFragment : Fragment() {
             binding.progressBar.isVisible = loading
         }
 
-        viewModel.productList.observe(viewLifecycleOwner) { productList ->
-            if (productList != null) {
-                productAdapter.updateProductList(productList)
-            }
+        viewModel.categoryList.observe(viewLifecycleOwner) { categories ->
+            categoryAdapter.updateCategories(categories)
+            binding
         }
 
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+
+
+
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
-
 }
