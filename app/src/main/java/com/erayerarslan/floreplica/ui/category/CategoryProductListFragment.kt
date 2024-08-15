@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.erayerarslan.floreplica.databinding.FragmentCategoryProductListBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,7 +43,8 @@ class CategoryProductListFragment : Fragment() {
 
     private fun setupRecyclerView() {
         categoryProductAdapter = CategoryProductAdapter(emptyList()) { product ->
-            //deatay sayfasına geçişte
+            val action = CategoryProductListFragmentDirections.actionCategoryProductListFragmentToDetailProductFragment(product.id ?: 0)
+            findNavController().navigate(action)
 
         }
 

@@ -43,10 +43,17 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        productAdapter = ProductAdapter()
+        productAdapter = ProductAdapter { product ->
+
+            val action =HomeFragmentDirections.actionHomeFragmentToDetailProductFragment(product.id ?: 0)
+            findNavController().navigate(action)
+
+        }
+
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         binding.homeRecyclerView.layoutManager = gridLayoutManager
         binding.homeRecyclerView.adapter = productAdapter
+
 
 
 

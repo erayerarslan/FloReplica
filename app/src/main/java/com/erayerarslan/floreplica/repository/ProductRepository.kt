@@ -4,7 +4,7 @@ import com.erayerarslan.floreplica.model.ProductItem
 import com.erayerarslan.floreplica.network.ApiService
 import javax.inject.Inject
 
-class ProductRepository @Inject constructor(private val apiService: ApiService) {
+class ProductRepository @Inject constructor(val apiService: ApiService) {
     suspend fun getProductList() = apiService.getProductList()
 
 
@@ -18,5 +18,9 @@ class ProductRepository @Inject constructor(private val apiService: ApiService) 
             emptyList()
         }
     }
+    suspend fun getProduct(productId: Int) =apiService.getProduct(productId)
+
+
+
 
 }

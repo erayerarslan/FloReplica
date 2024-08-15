@@ -9,9 +9,10 @@ import com.erayerarslan.floreplica.databinding.ProductHomeRecyclerviewBinding
 import com.erayerarslan.floreplica.model.ProductItem
 import com.erayerarslan.floreplica.util.loadImage
 
-class ProductAdapter :
+class ProductAdapter (private val onProductClick: (ProductItem) -> Unit):
     RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
     private var productList: MutableList<ProductItem> = mutableListOf()
+
     class ViewHolder(val binding: ProductHomeRecyclerviewBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,6 +25,7 @@ class ProductAdapter :
             productName.text = product.title
             productPrice.text = product.price.toString()
             productImage.loadImage(product.image)
+            root.setOnClickListener { product?.let { onProductClick(it) } }
         }
     }
 

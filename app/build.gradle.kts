@@ -103,6 +103,9 @@ dependencies {
     implementation("com.google.firebase:firebase-database:21.0.0")
     implementation("com.google.firebase:firebase-storage:21.0.0")
 
+    //chucker
+    implementation("com.github.chuckerteam.chucker:library:4.0.0")
+
 
 
 
