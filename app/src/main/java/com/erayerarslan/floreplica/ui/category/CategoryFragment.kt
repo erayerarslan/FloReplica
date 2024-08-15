@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.erayerarslan.floreplica.R
 import com.erayerarslan.floreplica.databinding.FragmentCategoryBinding
@@ -41,7 +42,11 @@ class CategoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.categoryRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        categoryAdapter = CategoryAdapter(emptyList())
+        categoryAdapter = CategoryAdapter(emptyList()) {
+            findNavController().navigate(
+                CategoryFragmentDirections.actionCategoryFragmentToCategoryProductListFragment(category = it)
+            )
+        }
         binding.categoryRecyclerView.adapter = categoryAdapter
 
         viewModel.getCategoryList()
@@ -59,8 +64,16 @@ class CategoryFragment : Fragment() {
         }
 
         viewModel.categoryList.observe(viewLifecycleOwner) { categories ->
-            categoryAdapter.updateCategories(categories)
-            binding
+            if (categories.isEmpty()) {
+                binding.textViewHomeError.text = "No categories found"
+                binding.textViewHomeError.isVisible = true
+            }else{
+                binding.textViewHomeError.isVisible = false
+
+                categoryAdapter.updateCategories(categories)
+            }
+
+
         }
 
     }

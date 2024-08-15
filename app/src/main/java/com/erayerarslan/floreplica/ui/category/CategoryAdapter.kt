@@ -7,7 +7,9 @@ import com.erayerarslan.floreplica.databinding.CategoryRecyclerviewBinding
 import com.erayerarslan.floreplica.databinding.ProductHomeRecyclerviewBinding
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class CategoryAdapter(private var categories: List<String>) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+class CategoryAdapter(private var categories: List<String>,
+                      private val onCategoryClick: (String) -> Unit
+    ) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: CategoryRecyclerviewBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -19,9 +21,14 @@ class CategoryAdapter(private var categories: List<String>) : RecyclerView.Adapt
         return categories.size
     }
 
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val category = categories[position]
         holder.binding.textViewCategoryName.text = category
+
+        holder.itemView.setOnClickListener {
+            onCategoryClick(category)
+        }
     }
     fun updateCategories(newCategories: List<String>) {
         categories = newCategories

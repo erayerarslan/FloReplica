@@ -10,4 +10,13 @@ class ProductRepository @Inject constructor(private val apiService: ApiService) 
 
     suspend fun getProductCategory() = apiService.getCategoryList()
 
+    suspend fun getAllProducts(): List<ProductItem> {
+        val response = apiService.getProductList()
+        return if (response.isSuccessful) {
+            response.body() ?: emptyList()
+        } else {
+            emptyList()
+        }
+    }
+
 }
