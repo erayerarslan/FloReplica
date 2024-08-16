@@ -33,8 +33,11 @@ class HomeFragment : Fragment() {
     ): View? {
 
 
+
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         (activity as? MainActivity)?.showBottomNavigationView()
+
+
 
 
         return binding.root
@@ -60,6 +63,7 @@ class HomeFragment : Fragment() {
         observeEvents()
 
         viewModel.getProductList()
+
     }
 
     private fun observeEvents() {

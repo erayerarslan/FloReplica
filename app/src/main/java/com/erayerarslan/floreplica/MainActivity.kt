@@ -3,12 +3,14 @@ package com.erayerarslan.floreplica
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.widget.Toolbar
 import android.window.OnBackInvokedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.erayerarslan.floreplica.databinding.ActivityMainBinding
@@ -34,12 +36,17 @@ class MainActivity : AppCompatActivity() {
         createBottomNavigation()
 
 
+
+
     }
+
+
 
 
     private fun createBottomNavigation() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         NavigationUI.setupWithNavController(binding.bottomNavigation,navHostFragment.navController)
+
     }
 
     fun showBottomNavigationView() {
@@ -49,6 +56,9 @@ class MainActivity : AppCompatActivity() {
     fun hideBottomNavigationView() {
         binding.bottomNavigation.visibility = View.GONE
     }
+
+
+
 
     override fun onSupportNavigateUp(): Boolean {
 

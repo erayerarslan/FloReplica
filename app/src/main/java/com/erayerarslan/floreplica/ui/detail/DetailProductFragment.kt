@@ -43,6 +43,9 @@ class DetailProductFragment : Fragment() {
         (activity as? MainActivity)?.hideBottomNavigationView()
         viewModel.getProduct(args.productId)
         observeEvents()
+        binding.backButton.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
     }
 
     private fun observeEvents(){
@@ -58,6 +61,7 @@ class DetailProductFragment : Fragment() {
             binding.textViewDetailTitle.text = it.title
             binding.textViewDetailPrice.text = it.price.toString()
             binding.textViewDetailDescription.text = it.description
+            binding.backButton.bringToFront()
         }
 
     }
