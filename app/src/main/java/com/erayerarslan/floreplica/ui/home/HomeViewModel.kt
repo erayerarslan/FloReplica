@@ -29,6 +29,7 @@ class HomeViewModel @Inject constructor(private val repository: ProductRepositor
             _isLoading.value = true
             try {
                 val response = repository.getProductList()
+
                 if (response.isSuccessful) {
                     _productList.value = response.body()
                 } else {

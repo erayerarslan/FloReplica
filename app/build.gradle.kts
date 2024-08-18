@@ -106,6 +106,10 @@ dependencies {
     //chucker
     implementation("com.github.chuckerteam.chucker:library:4.0.0")
 
+    //checkbox
+    implementation("com.google.android.material:material:1.9.0")
+
+
 
 
 

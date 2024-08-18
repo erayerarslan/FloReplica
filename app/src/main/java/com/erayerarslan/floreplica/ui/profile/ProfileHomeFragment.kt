@@ -67,6 +67,7 @@ class ProfileHomeFragment : Fragment() {
                         binding.textViewFirstName.text = response.data.firstName
                         binding.textViewLastName.text = response.data.lastName
                         binding.textViewEmail.text = response.data.email
+
                     }
                     is Response.Error -> {
                         // Hata mesajını göster
