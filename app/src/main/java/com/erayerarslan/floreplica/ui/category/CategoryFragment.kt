@@ -23,7 +23,6 @@ class CategoryFragment : Fragment() {
     private var _binding: FragmentCategoryBinding? = null
     private val binding get() = _binding!!
     private lateinit var categoryAdapter: CategoryAdapter
-    private lateinit var productAdapter: ProductAdapter
     private val viewModel by viewModels<CategoryViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {

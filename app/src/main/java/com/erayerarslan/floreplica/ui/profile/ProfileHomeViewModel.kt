@@ -34,7 +34,6 @@ class ProfileHomeViewModel @Inject constructor(
             userRepository.getUserData().collect { response ->
                 _profileHomeState.value = response
 
-
             }
         }
     }

@@ -28,6 +28,9 @@ class FavoriteViewModel @Inject constructor(private val repository: ProductRepos
                 val favoriteIds = userRepository.getFavoriteProductIds()
                 // ürünleri uidye göre al
                 val products = repository.getProductsByIds(favoriteIds)
+                products.forEach { product ->
+                    product.isFavorite = true
+                }
                 // livedataya yolla
                 favoriteProducts.value = products
 
