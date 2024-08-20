@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.erayerarslan.floreplica.R
 import com.erayerarslan.floreplica.databinding.FragmentCategoryBinding
 import com.erayerarslan.floreplica.databinding.FragmentFavoriteBinding
@@ -17,6 +19,9 @@ import com.erayerarslan.floreplica.ui.home.HomeFragmentDirections
 import com.erayerarslan.floreplica.ui.home.HomeViewModel
 import com.erayerarslan.floreplica.ui.home.ProductAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -27,6 +32,8 @@ class FavoriteFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var productAdapter: ProductAdapter
     private val viewModel by viewModels<FavoriteViewModel>()
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +53,9 @@ class FavoriteFragment : Fragment() {
 
         productAdapter = ProductAdapter({ product ->
 
-            val action =FavoriteFragmentDirections.actionFavoriteFragmentToDetailProductFragment(product.id ?: 0)
+            val action = FavoriteFragmentDirections.actionFavoriteFragmentToDetailProductFragment(
+                product.id ?: 0
+            )
             findNavController().navigate(action)
 
         },
@@ -58,6 +67,7 @@ class FavoriteFragment : Fragment() {
                 }
             }
         )
+        swipeRefreshLayout = binding.swipeRefreshLayout
 
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         binding.favoriteRecyclerView.layoutManager = gridLayoutManager
@@ -66,15 +76,25 @@ class FavoriteFragment : Fragment() {
         viewModel.getFavoriteProductList()
         observeEvents()
 
+        swipeRefreshLayout.setOnRefreshListener {
+            // Veri yenileme işlemini başlat
+            viewModel.getFavoriteProductList()
+
+
+        }
 
 
     }
+
     private fun observeEvents() {
 
+        lifecycleScope.launch {
+            viewModel.favoriteProducts.observe(viewLifecycleOwner) { productList ->
 
-        viewModel.favoriteProducts.observe(viewLifecycleOwner) { productList ->
-            if (productList != null) {
-                productAdapter.updateProductList(productList)
+                    productAdapter.updateProductList(productList)
+                    swipeRefreshLayout.isRefreshing = false
+
+
             }
 
         }

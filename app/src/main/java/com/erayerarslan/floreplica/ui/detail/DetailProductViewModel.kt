@@ -15,6 +15,9 @@ class DetailProductViewModel @Inject constructor(private val repository: Product
 
     private val _product = MutableLiveData<ProductItem>()
     val product: LiveData<ProductItem> = _product
+    val category = MutableLiveData<String?>()
+    val similarProducts = MutableLiveData<List<ProductItem>>()
+
     val isLoading = MutableLiveData(false)
     val errorMesssage : MutableLiveData<String?> = MutableLiveData()
 
@@ -23,8 +26,19 @@ class DetailProductViewModel @Inject constructor(private val repository: Product
         viewModelScope.launch {
             try {
                 val response = repository.apiService.getProduct(productId)
+
+                // Benzer ürünleri getir
+                val allProducts = repository.getAllProducts()
+                val filteredProducts = allProducts.filter {
+                    it.category == response.category && it.id != productId
+                }
+               similarProducts.value = filteredProducts
+
+
+                if (response != null) {
+                    category.value = response.category
+                }
                 _product.value = response
-                println(response)
             } catch (e: Exception) {
                 errorMesssage.value = e.message
                 } finally {

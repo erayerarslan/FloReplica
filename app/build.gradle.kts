@@ -109,6 +109,9 @@ dependencies {
     //checkbox
     implementation("com.google.android.material:material:1.9.0")
 
+    //swiperefresh
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
 
 
 

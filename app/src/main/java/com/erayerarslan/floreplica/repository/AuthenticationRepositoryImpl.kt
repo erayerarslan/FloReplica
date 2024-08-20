@@ -26,18 +26,19 @@ class AuthenticationRepositoryImpl @Inject constructor(
     override suspend fun logout() = auth.signOut()
 
     override suspend fun login(email: String, password: String): Flow<Response<AuthResult>> = flow {
+            try {
+                emit(Response.Loading)
+                val data = auth.signInWithEmailAndPassword(email, password).await()
+                emit(Response.Success(data))
+            } catch (e: Exception) {
+                 emit(Response.Error(e.localizedMessage ?: "Oops, something went wrong."))
+            }
 
-        try {
-            emit(Response.Loading)
-            val data = auth.signInWithEmailAndPassword(email, password).await()
-            emit(Response.Success(data))
-        } catch (e: Exception) {
-            emit(Response.Error(e.localizedMessage ?: "Oops, something went wrong."))
-        }
     }
 
     override suspend fun register(email: String, password: String): Flow<Response<AuthResult>> =
         flow {
+
             try {
                 emit(Response.Loading)
                 val data = auth.createUserWithEmailAndPassword(email, password).await()

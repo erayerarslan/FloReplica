@@ -73,12 +73,23 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewDetailTitle"
                 tools:text="Description bla bla..." />
+            <TextView
+                android:id="@+id/similarProduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Similar Products"
+                android:textSize="23sp"
+                app:layout_constraintTop_toBottomOf="@id/textViewDetailDescription"
+                />
+
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/detailRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/textViewDetailDescription"
+                app:layout_constraintTop_toBottomOf="@+id/similarProduct"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:listitem="@layout/product_detail_recyclerview"
 

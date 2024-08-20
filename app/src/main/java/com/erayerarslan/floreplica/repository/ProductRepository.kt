@@ -39,6 +39,19 @@ class ProductRepository @Inject constructor(val apiService: ApiService) {
 
         return products
     }
+    suspend fun getProductListCategory(productId: Int): ProductItem {
+        val response = apiService.getProduct(productId)
+        val responseList = getAllProducts()
+        val products = mutableListOf<ProductItem>()
+        responseList.forEach { product ->
+            if (product.category == response.category) {
+                products.add(product)
+            }
+        }
+        return products[0]
+
+
+    }
 
 
 

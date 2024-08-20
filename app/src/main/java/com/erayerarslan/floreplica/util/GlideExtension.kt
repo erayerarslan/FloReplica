@@ -42,7 +42,7 @@ fun ImageView.detailImage(path: String?) {
         .load(imagePath)
         .apply(
             RequestOptions()
-                .override(600, 400) // Sabit genişlik ve yükseklik (piksel cinsinden)
+                .override(300, 300) // Sabit genişlik ve yükseklik (piksel cinsinden)
                 .centerCrop()
                 .fitCenter()
                 .error(R.drawable.ic_error)
