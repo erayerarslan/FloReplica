@@ -16,6 +16,11 @@ data class ProductItem(
     val image: String?,
     @SerializedName("category")
     val category: String?,
+    var isFavorite: Boolean,
+    @SerializedName("rating")
+    val rating: ProductRate?
 
-    var isFavorite: Boolean
+
+
 )
+

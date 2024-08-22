@@ -20,48 +20,127 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5" />
-    <TextView
-        android:id="@+id/textViewEmail"
-        android:layout_width="0dp"
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/profileCard"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="TextView"
-        android:gravity="center"
-        android:textSize="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/textViewFirstName"
-        />
-
-    <TextView
-        android:id="@+id/textViewFirstName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="TextView"
-        android:gravity="center"
-        android:textSize="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewEmail"
-        app:layout_constraintBottom_toTopOf="@+id/textViewLastName"
-        />
-
-    <TextView
-        android:id="@+id/textViewLastName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:gravity="center"
-        android:text="TextView"
-        android:textSize="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnProfileHome"
-        app:layout_constraintBottom_toTopOf="@id/btnProfileHome"
-        />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_bias="0.5"
+        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="@color/colorPrimaryDark"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            tools:srcCompat="@tools:sample/avatars"
+            android:src="@drawable/ic_profile"
+            />
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:orientation="vertical">
+             <TextView
+                 android:id="@+id/textViewName"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:text="Eray Erarslan"
+                 android:textColor="@color/white"
+                 android:textSize="24dp"
+                 />
+             <TextView
+                 android:id="@+id/textViewEmail"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 tools:text="james.wilson@example-pet-store.com"
+                 android:textSize="16dp"
+                 android:textColor="@color/white"
+                 />
+         </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/accountCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        app:cardBackgroundColor="@color/white_1"
+        app:layout_constraintTop_toBottomOf="@+id/profileCard"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+
+            >
+            <LinearLayout
+                android:id="@+id/my_Account"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="8dp"
+                    tools:srcCompat="@tools:sample/avatars"
+                    android:src="@drawable/ic_profile"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/oval_background"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="My Account"
+                    android:layout_gravity="center"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/logOut"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="8dp"
+                    tools:srcCompat="@tools:sample/avatars"
+                    android:src="@drawable/ic_logout"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/oval_background"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Log out"
+                    android:layout_gravity="center"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+
+
 
     <Button
         android:id="@+id/btnProfileHome"
@@ -73,42 +152,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewLastName"
         app:layout_constraintVertical_bias="0.5" />
 
-    <TextView
-        android:id="@+id/textViewStaticEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginBottom="12dp"
-        android:textSize="24dp"
-        android:text="Email Adresiniz"
-        app:layout_constraintBottom_toTopOf="@+id/textViewEmail"
-        app:layout_constraintStart_toStartOf="@+id/textViewEmail"
-        />
-    <TextView
-        android:id="@+id/textViewStaticFirstName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginBottom="12dp"
-        android:textSize="24dp"
-        android:text="İsminiz"
-        app:layout_constraintBottom_toTopOf="@+id/textViewFirstName"
-        app:layout_constraintStart_toStartOf="@+id/textViewFirstName"
-        />
-    <TextView
-        android:id="@+id/textViewStaticLastName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginBottom="12dp"
-        android:textSize="24dp"
-        android:text="Soy İsminiz"
-        app:layout_constraintBottom_toTopOf="@+id/textViewLastName"
-        app:layout_constraintStart_toStartOf="@+id/textViewLastName"
-        />
+
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

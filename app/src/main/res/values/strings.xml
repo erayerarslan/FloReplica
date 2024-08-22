@@ -2,4 +2,6 @@
     <string name="app_name">FloReplica</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="erkek">Erkek</string>
+    <string name="kad_n">Kadın</string>
 </resources>

@@ -55,13 +55,26 @@
                 android:gravity="start|center_vertical"
                 android:maxLines="1"
                 android:textSize="17sp"
+                android:layout_marginTop="12dp"
                 android:textStyle="bold|italic"
-                app:layout_constraintBottom_toTopOf="@+id/textViewDetailDescription"
+                app:layout_constraintBottom_toTopOf="@+id/textRate"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.055"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageViewProduct"
                 tools:text="Nike Air Max 270 React ENG" />
+            <TextView
+                android:id="@+id/textRate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDetailTitle"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="Rating: 4.5"
+                android:layout_marginStart="8dp"
+                android:layout_margin="4dp"
+                />
 
             <TextView
                 android:id="@+id/textViewDetailDescription"
@@ -71,7 +84,7 @@
                 android:gravity="start|center_vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewDetailTitle"
+                app:layout_constraintTop_toBottomOf="@+id/textRate"
                 tools:text="Description bla bla..." />
             <TextView
                 android:id="@+id/similarProduct"
@@ -158,5 +171,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

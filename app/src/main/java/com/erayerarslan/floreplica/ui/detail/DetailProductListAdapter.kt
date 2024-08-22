@@ -12,8 +12,10 @@ import com.erayerarslan.floreplica.util.detailImage
 import com.erayerarslan.floreplica.util.loadImage
 
 class DetailProductListAdapter(
+    val onProductClick: (ProductItem) -> Unit
 
-): RecyclerView.Adapter<DetailProductListAdapter.ViewHolder>() {
+
+    ): RecyclerView.Adapter<DetailProductListAdapter.ViewHolder>() {
     private val productList = mutableListOf<ProductItem>()
     class ViewHolder(val binding: ProductDetailRecyclerviewBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -40,8 +42,9 @@ class DetailProductListAdapter(
 
 
 
-
-
+            holder.itemView.setOnClickListener {
+                onProductClick(product)
+            }
         }
 
     }

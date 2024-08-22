@@ -52,7 +52,16 @@ class DetailProductFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        detailProductListAdapter = DetailProductListAdapter()
+        detailProductListAdapter = DetailProductListAdapter(
+            onProductClick = { product ->
+                val bundle = Bundle().apply {
+                    putInt("productId", product.id ?: 1)
+                }
+               findNavController().navigate(R.id.action_detailProductFragment_self, bundle)
+
+
+            }
+        )
 //        val gridLayoutManager = GridLayoutManager(requireContext(), 2)
 //        binding.detailRecyclerView.layoutManager = gridLayoutManager
 //        binding.detailRecyclerView.adapter = detailProductListAdapter
@@ -69,6 +78,8 @@ class DetailProductFragment : Fragment() {
 //            R.id.action_categoryProductListFragment_to_detailProductFragment,
 //            bundle
 //        )
+
+
         observeEvents()
     }
 
@@ -83,6 +94,7 @@ class DetailProductFragment : Fragment() {
         viewModel.product.observe(viewLifecycleOwner) {
             binding.imageViewProduct.detailImage(it.image)
             binding.textViewDetailTitle.text = it.title
+            binding.textRate.text = "Rating: " + it.rating?.rate.toString()
             binding.textViewDetailPrice.text = it.price.toString()
             binding.textViewDetailDescription.text = it.description
             binding.backButton.bringToFront()

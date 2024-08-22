@@ -40,12 +40,13 @@ class UserRepositoryImpl @Inject constructor(
                         val firstName = dataSnapshot.child("firstName").getValue(String::class.java)
                         val lastName = dataSnapshot.child("lastName").getValue(String::class.java)
                         val email = dataSnapshot.child("email").getValue(String::class.java)
+                        val gender = dataSnapshot.child("gender").getValue(String::class.java)
 
 
                         val user = if (email == null) {
-                            User(firstName, lastName, emailLogin)
+                            User(firstName, lastName, emailLogin,gender)
                         } else {
-                            User(firstName, lastName, email)
+                            User(firstName, lastName, email,gender)
                         }
                         continuation.resume(user)
                     }
@@ -71,6 +72,7 @@ class UserRepositoryImpl @Inject constructor(
         userRef.child("firstName").setValue(user.firstName)
         userRef.child("lastName").setValue(user.lastName)
         userRef.child("email").setValue(emailLogin)
+        userRef.child("gender").setValue(user.gender)
 
 
 

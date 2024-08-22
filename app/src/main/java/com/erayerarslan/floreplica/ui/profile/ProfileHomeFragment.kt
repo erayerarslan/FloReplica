@@ -48,8 +48,14 @@ class ProfileHomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnProfileHome.setOnClickListener{
+        binding.myAccount.setOnClickListener{
             findNavController().navigate(R.id.action_profileHomeFragment_to_profileFragment)
+        }
+        binding.logOut.setOnClickListener {
+            binding.progressBar.isVisible = true
+            FirebaseAuth.getInstance().signOut()
+            findNavController().navigate(R.id.action_profileHomeFragment_to_signInFragment)
+            binding.progressBar.isVisible = false
         }
 
         lifecycleScope.launch {
@@ -64,8 +70,7 @@ class ProfileHomeFragment : Fragment() {
                     is Response.Success -> {
                         // Kullanıcı bilgilerini göster
                         binding.progressBar.isVisible = false
-                        binding.textViewFirstName.text = response.data.firstName
-                        binding.textViewLastName.text = response.data.lastName
+                        binding.textViewName.text = response.data.firstName + " " + response.data.lastName
                         binding.textViewEmail.text = response.data.email
 
                     }
