@@ -16,7 +16,7 @@ class ProfileUpdateViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : ViewModel() {
     private val _profileUpdateState = MutableStateFlow<Response<User>>(Response.Loading)
-    private val profileUpdateState: StateFlow<Response<User>> = _profileUpdateState
+    val profileUpdateState: StateFlow<Response<User>> = _profileUpdateState
 
     suspend fun getUser() {
 

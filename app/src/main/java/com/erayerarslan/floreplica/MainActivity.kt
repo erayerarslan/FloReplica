@@ -14,6 +14,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.erayerarslan.floreplica.databinding.ActivityMainBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
@@ -32,13 +33,37 @@ class MainActivity : AppCompatActivity() {
 
 
         setContentView(binding.root)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        navController = navHostFragment.navController
 
-        createBottomNavigation()
-
-
+        // BottomNavigationView ile NavController'ı bağla
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.homeFragment -> {
+                    navController.navigate(R.id.homeFragment)
+                    true
+                }
+                R.id.categoryFragment -> {
+                    navController.navigate(R.id.categoryFragment)
+                    true
+                }
+                R.id.favoriteFragment -> {
+                    navController.navigate(R.id.favoriteFragment)
+                    true
+                }
+                R.id.profileHomeFragment -> {
+                    navController.navigate(R.id.profileHomeFragment)
+                    true
+                }
+                else -> false
+            }
+        }
 
 
     }
+
+
 
 
 
@@ -47,7 +72,9 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         NavigationUI.setupWithNavController(binding.bottomNavigation,navHostFragment.navController)
 
+
     }
+
 
     fun showBottomNavigationView() {
         binding.bottomNavigation.visibility = View.VISIBLE

@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.erayerarslan.floreplica.R
 import com.erayerarslan.floreplica.core.Response
@@ -81,6 +82,7 @@ class ProfileUpdateFragment : Fragment() {
 
         binding.btnSaveProfile.setOnClickListener {
             lifecycleScope.launch {
+
                 updateSelection(isMaleSelected)
                 val email= auth.userEmail()
                 val firstName=binding.editTextName.text.toString()
@@ -88,21 +90,47 @@ class ProfileUpdateFragment : Fragment() {
                 val gender =isMaleSelected.toString()
                 val user= User(firstName,lastName,email,gender)
                 repository.updateUserData(user).collect { response ->
-                    // Handle the response
                     when(response){
                         is Response.Loading -> {
-                            // Loading işlemleri
                             binding.progressBarProfileUpdate.visibility = View.VISIBLE
                         }
                         is Response.Success -> {
 
                             binding.progressBarProfileUpdate.visibility = View.GONE
-                            // Kullanıcı bilgilerini göster
                             findNavController().popBackStack()
                         }
                         is Response.Error -> {
                             Log.e("ProfileUpdateFragment", "Error: ${response.message}")
                         }
+                    }
+                }
+
+            }
+        }
+        //kişi bilgilerini getiriyoruz ve erkek kadını seçili belirtiyoruz ve diğer bilgileri
+        profileUpdateViewModel.viewModelScope.launch {
+            profileUpdateViewModel.getUser()
+            profileUpdateViewModel.profileUpdateState.collect { response ->
+                when(response){
+                    is Response.Loading -> {
+                        // Loading işlemleri
+                        binding.progressBarProfileUpdate.visibility = View.VISIBLE
+                    }
+                    is Response.Success -> {
+                        // Kullanıcı bilgilerini göster
+                        binding.progressBarProfileUpdate.visibility = View.GONE
+                        binding.editTextName.setText(response.data.firstName)
+                        binding.editTextLastName.setText(response.data.lastName)
+                        response.data.gender.let {
+                            if (it == "true") {
+                                updateSelection(true)
+                            } else {
+                                updateSelection(false)
+                            }
+                        }
+                    }
+                    is Response.Error -> {
+                        Log.e("ProfileUpdateFragment", "Error: ${response.message}")
                     }
                 }
             }

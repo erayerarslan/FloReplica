@@ -21,6 +21,8 @@ interface AuthenticationRepository {
 
     suspend fun isLoggedIn(): Boolean
 
+    suspend fun signInAnonymously(): Flow<Response<AuthResult>>
+
 
 
 }

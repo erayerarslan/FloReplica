@@ -57,6 +57,9 @@ class AuthenticationRepositoryImpl @Inject constructor(
             emit(Response.Error(e.localizedMessage ?: "Oops, something went wrong."))
         }
     }
+    override suspend fun signInAnonymously(): Flow<Response<AuthResult>> = flow {
+
+    }
 
 
 

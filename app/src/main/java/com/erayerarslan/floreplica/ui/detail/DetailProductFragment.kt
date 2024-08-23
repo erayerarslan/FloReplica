@@ -95,6 +95,7 @@ class DetailProductFragment : Fragment() {
             binding.imageViewProduct.detailImage(it.image)
             binding.textViewDetailTitle.text = it.title
             binding.textRate.text = "Rating: " + it.rating?.rate.toString()
+            binding.ratingBar.rating = it.rating?.rate.toString().toFloat()
             binding.textViewDetailPrice.text = it.price.toString()
             binding.textViewDetailDescription.text = it.description
             binding.backButton.bringToFront()

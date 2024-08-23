@@ -46,6 +46,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         productAdapter = ProductAdapter({ product ->
 
             val action =HomeFragmentDirections.actionHomeFragmentToDetailProductFragment(product.id ?: 0)
