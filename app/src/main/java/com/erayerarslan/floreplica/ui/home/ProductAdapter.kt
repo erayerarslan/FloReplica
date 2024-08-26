@@ -83,10 +83,10 @@ class ProductAdapter(
 
     }
     fun updateItem(position: Int) {
-        // Öncelikle, item'i güncelle
+        //  item'i güncelle
         val item = productList[position]
         item.isFavorite = !item.isFavorite
-        // Daha sonra RecyclerView'ı güncelle
+        // RecyclerView'ı güncelle
         notifyItemChanged(position)
     }
 

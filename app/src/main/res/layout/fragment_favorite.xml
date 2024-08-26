@@ -47,7 +47,7 @@
         android:id="@+id/favoriteRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
 
         tools:listitem="@layout/product_home_recyclerview" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

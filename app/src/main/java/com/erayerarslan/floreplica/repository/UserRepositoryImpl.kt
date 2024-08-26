@@ -80,6 +80,7 @@ class UserRepositoryImpl @Inject constructor(
 
     }
     override suspend fun getFavoriteProductIds(): List<String> {
+
         val uid = auth.currentUser?.uid ?: throw Exception("User not logged in")
         val favoriteIds = mutableListOf<String>()
         val userRef = databaseReference.child("Users").child(uid).child("favorites")

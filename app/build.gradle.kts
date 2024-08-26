@@ -112,6 +112,8 @@ dependencies {
     //swiperefresh
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
+    //await için
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.0")
 
 
 

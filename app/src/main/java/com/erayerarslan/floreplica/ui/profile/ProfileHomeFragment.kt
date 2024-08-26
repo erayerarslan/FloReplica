@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -48,9 +49,7 @@ class ProfileHomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.myAccount.setOnClickListener{
-            findNavController().navigate(R.id.action_profileHomeFragment_to_profileFragment)
-        }
+
         binding.logOut.setOnClickListener {
             binding.progressBar.isVisible = true
             FirebaseAuth.getInstance().signOut()
@@ -72,10 +71,21 @@ class ProfileHomeFragment : Fragment() {
                         binding.progressBar.isVisible = false
                         binding.textViewName.text = response.data.firstName + " " + response.data.lastName
                         binding.textViewEmail.text = response.data.email
-
+                        if(binding.textViewName.text == "null null"){
+                            binding.textViewName.text = "Misafir Kullanıcı"
+                        }
+                        binding.myAccount.setOnClickListener{
+                            if (response.data.email == null || response.data.email == ""){
+                                Toast.makeText(requireContext(), "Lütfen kullanıcı girişi yapınız", Toast.LENGTH_SHORT).show()
+                            }
+                            else{
+                                findNavController().navigate(R.id.action_profileHomeFragment_to_profileFragment)
+                            }
+                        }
                     }
                     is Response.Error -> {
                         // Hata mesajını göster
+                        Log.e("ProfileHomeFragment", "Error: ${response.message}")
                     }
                 }
             }
