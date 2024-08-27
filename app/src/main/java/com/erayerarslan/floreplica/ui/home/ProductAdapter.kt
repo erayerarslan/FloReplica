@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.erayerarslan.floreplica.R
 import com.erayerarslan.floreplica.core.Response
 import com.erayerarslan.floreplica.databinding.ProductHomeRecyclerviewBinding
@@ -20,14 +21,13 @@ class ProductAdapter(
     private val onProductClick: (ProductItem) -> Unit,
     private val onFavoriteClick: (ProductItem, Boolean) -> Unit
 ) :
-    RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
+    RecyclerView.Adapter<ViewHolder>() {
     private val productList = mutableListOf<ProductItem>()
 
-    class ViewHolder(val binding: ProductHomeRecyclerviewBinding) :
-        RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TempViewHolder {
+        return TempViewHolder(
             ProductHomeRecyclerviewBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -36,40 +36,79 @@ class ProductAdapter(
         )
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val product = productList[position]
+    inner class TempViewHolder internal constructor(val binding: ProductHomeRecyclerviewBinding):RecyclerView.ViewHolder(binding.root){
+        fun bind(product: ProductItem){
+            binding.apply {
+                productName.text = product.title
+                productPrice.text = product.price.toString()
+                productImage.loadImage(product.image)
+
+                root.setOnClickListener { product?.let { onProductClick(it) } }
+
+                imgFavorite.setImageResource(if (product.isFavorite) R.drawable.ic_heart_filled else R.drawable.ic_heart_outlined)
 
 
+                imgFavorite.setOnClickListener {
+                    if (product.isFavorite) {
+                        binding.imgFavorite.setImageResource(R.drawable.ic_heart_filled)
+                        saveFavoriteStatus(product, false)
+                        updateItem(bindingAdapterPosition)
 
-        holder.binding.apply {
-            productName.text = product.title
-            productPrice.text = product.price.toString()
-            productImage.loadImage(product.image)
+                    } else {
+                        binding.imgFavorite.setImageResource(R.drawable.ic_heart_outlined)
+                        saveFavoriteStatus(product, true)
+                        updateItem(bindingAdapterPosition)
+                    }
+                }
 
-            root.setOnClickListener { product?.let { onProductClick(it) } }
-
-            imgFavorite.setImageResource(if (product.isFavorite) R.drawable.ic_heart_filled else R.drawable.ic_heart_outlined)
-
-
-            imgFavorite.setOnClickListener {
-                if (product.isFavorite) {
-                    holder.binding.imgFavorite.setImageResource(R.drawable.ic_heart_filled)
-                    saveFavoriteStatus(product, false)
-                    updateItem(position)
-
-                } else {
-                    holder.binding.imgFavorite.setImageResource(R.drawable.ic_heart_outlined)
-                    saveFavoriteStatus(product, true)
-                    updateItem(position)
+                itemView.setOnClickListener {
+                    onProductClick(product)
                 }
             }
 
-            holder.itemView.setOnClickListener {
-                onProductClick(product)
+        }
+    }
+    inner class TempViewHolder2 internal constructor(val binding: ProductHomeRecyclerviewBinding):RecyclerView.ViewHolder(binding.root){
+        fun bind(product: ProductItem){
+            binding.apply {
+                productName.text = product.title
+                productPrice.text = product.price.toString()
+                productImage.loadImage(product.image)
+
+                root.setOnClickListener { product.let { onProductClick(it) } }
+
+                imgFavorite.setImageResource(if (product.isFavorite) R.drawable.ic_heart_filled else R.drawable.ic_heart_outlined)
+
+
+                imgFavorite.setOnClickListener {
+                    if (product.isFavorite) {
+                        binding.imgFavorite.setImageResource(R.drawable.ic_heart_filled)
+                        saveFavoriteStatus(product, false)
+                        updateItem(bindingAdapterPosition)
+
+                    } else {
+                        binding.imgFavorite.setImageResource(R.drawable.ic_heart_outlined)
+                        saveFavoriteStatus(product, true)
+                        updateItem(bindingAdapterPosition)
+                    }
+                }
+
+                itemView.setOnClickListener {
+                    onProductClick(product)
+                }
             }
 
-
         }
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val product = productList[position]
+        if(holder is TempViewHolder){
+            holder.bind(product)
+        }else if(holder is TempViewHolder2){
+            holder.bind(product)
+        }
+
 
     }
 

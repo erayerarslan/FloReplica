@@ -69,7 +69,7 @@ class SignInFragment() : Fragment() {
         }
 
 
-        viewLifecycleOwner.lifecycleScope.launch {
+        lifecycleScope.launch {
             viewModel.signInState.collect { response ->
                 when (response) {
                     is Response.Loading -> {
