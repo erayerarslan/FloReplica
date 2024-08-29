@@ -6,15 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.erayerarslan.floreplica.MainActivity
 import com.erayerarslan.floreplica.databinding.FragmentCategoryProductListBinding
-import com.erayerarslan.floreplica.ui.home.HomeFragmentDirections
-import com.erayerarslan.floreplica.ui.home.ProductAdapter
+import com.erayerarslan.floreplica.ui.home.adapter.ProductAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CategoryProductListFragment : Fragment() {
@@ -34,6 +32,9 @@ class CategoryProductListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.backButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
         setupRecyclerView()
         observeViewModel()
@@ -48,17 +49,12 @@ class CategoryProductListFragment : Fragment() {
         productAdapter = ProductAdapter({ product ->
 
             val action =
-                CategoryProductListFragmentDirections.actionCategoryProductListFragmentToDetailProductFragment(product.id ?: 0)
+                CategoryProductListFragmentDirections.actionCategoryProductListFragmentToDetailProductFragment(
+                    product.id ?: 0
+                )
             findNavController().navigate(action)
 
-        },
-            { product, isFavorite ->
-                if (isFavorite) {
-                    println("favorilere eklendi")
-                } else {
-                    println("favoriden çıkarıldı")
-                }
-            }
+        }
         )
 
         binding.categoryProductListRecyclerView.apply {

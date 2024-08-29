@@ -5,4 +5,6 @@
     <string name="male">Erkek</string>
     <string name="female">Kadın</string>
     <string name="sing_in_info_text">Log in to the FLO Replica</string>
+    <string name="update">Güncelle</string>
+
 </resources>

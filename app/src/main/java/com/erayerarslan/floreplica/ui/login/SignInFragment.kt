@@ -31,11 +31,6 @@ class SignInFragment() : Fragment() {
     private var _binding: FragmentSignInBinding? = null
     private val binding get() = _binding!!
 
-    constructor(parcel: Parcel) : this() {
-
-    }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -78,8 +73,10 @@ class SignInFragment() : Fragment() {
                     }
 
                     is Response.Success -> {
-                        Toast.makeText(requireContext(), "Sign-in successful", Toast.LENGTH_SHORT).show()
                         findNavController().navigate(R.id.action_signInFragment_to_homeFragment)
+                        (activity as MainActivity).binding.bottomNavigation.selectedItemId = R.id.homeFragment
+
+
                     }
 
                     is Response.Error -> {
@@ -105,6 +102,8 @@ class SignInFragment() : Fragment() {
                     is Response.Success -> {
                         Toast.makeText(requireContext(), "Sign-in successful", Toast.LENGTH_SHORT).show()
                         findNavController().navigate(R.id.action_signInFragment_to_homeFragment)
+                        (activity as MainActivity).binding.bottomNavigation.selectedItemId = R.id.homeFragment
+
 
                     }
                     is Response.Error -> {

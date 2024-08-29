@@ -5,23 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.erayerarslan.floreplica.MainActivity
 import com.erayerarslan.floreplica.R
-import com.erayerarslan.floreplica.databinding.FragmentCategoryBinding
 import com.erayerarslan.floreplica.databinding.FragmentFavoriteBinding
 import com.erayerarslan.floreplica.repository.UserRepository
-import com.erayerarslan.floreplica.ui.home.HomeFragmentDirections
-import com.erayerarslan.floreplica.ui.home.HomeViewModel
-import com.erayerarslan.floreplica.ui.home.ProductAdapter
+import com.erayerarslan.floreplica.ui.home.adapter.ProductAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -58,14 +53,7 @@ class FavoriteFragment : Fragment() {
             )
             findNavController().navigate(action)
 
-        },
-            { product, isFavorite ->
-                if (isFavorite) {
-                    println("favorilere eklendi")
-                } else {
-                    println("favoriden çıkarıldı")
-                }
-            }
+        }
         )
         swipeRefreshLayout = binding.swipeRefreshLayout
 
@@ -82,7 +70,8 @@ class FavoriteFragment : Fragment() {
 
 
         }
-
+        println("emptyfavorite "+viewModel.emptyFavorite.value)
+        println("user "+viewModel.guestUser.value)
 
     }
 
@@ -90,11 +79,35 @@ class FavoriteFragment : Fragment() {
 
         lifecycleScope.launch {
             viewModel.favoriteProducts.observe(viewLifecycleOwner) { productList ->
-
                     productAdapter.updateProductList(productList)
                     swipeRefreshLayout.isRefreshing = false
+            }
+            viewModel.emptyFavorite.observe(viewLifecycleOwner){
+                if(it) {
 
+                        binding.textViewEmptyRecyclerview.visibility = View.VISIBLE
+                        binding.buttonEmptyRecyclerview.visibility = View.VISIBLE
+                        binding.buttonEmptyRecyclerview.setOnClickListener {
+                            findNavController().navigate(R.id.action_favoriteFragment_to_homeFragment)
+                            (activity as MainActivity).binding.bottomNavigation.selectedItemId = R.id.homeFragment
+                        }
+                }
+            }
+            lifecycleScope.launch {
+                viewModel.guestUser.observe(viewLifecycleOwner){
+                    if(it){
 
+                            binding.textViewEmptyRecyclerview.text = "Favori ürünlerinizi görebilmek için giriş yapmalısınız"
+                            binding.buttonEmptyRecyclerview.text ="Giriş Yap"
+                            binding.textViewEmptyRecyclerview.visibility = View.VISIBLE
+                            binding.buttonEmptyRecyclerview.visibility = View.VISIBLE
+                            binding.buttonEmptyRecyclerview.setOnClickListener {
+                                findNavController().navigate(R.id.action_favoriteFragment_to_signInFragment)
+                                (activity as MainActivity).binding.bottomNavigation.selectedItemId = R.id.signInFragment
+
+                        }
+                    }
+                }
             }
 
         }

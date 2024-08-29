@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.erayerarslan.floreplica.R
 import com.erayerarslan.floreplica.databinding.ProductDetailRecyclerviewBinding
+import com.erayerarslan.floreplica.databinding.ProductDetailTopRecyclerviewBinding
 import com.erayerarslan.floreplica.databinding.ProductHomeRecyclerviewBinding
 import com.erayerarslan.floreplica.model.ProductItem
 import com.erayerarslan.floreplica.util.detailImage
@@ -18,6 +19,9 @@ class DetailProductListAdapter(
     private val productList = mutableListOf<ProductItem>()
 
     class ViewHolder(val binding: ProductDetailRecyclerviewBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
+    class ViewHolder2(val binding: ProductDetailTopRecyclerviewBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

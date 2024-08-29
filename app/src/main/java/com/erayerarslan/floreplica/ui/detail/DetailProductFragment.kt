@@ -9,15 +9,11 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.erayerarslan.floreplica.MainActivity
 import com.erayerarslan.floreplica.R
 import com.erayerarslan.floreplica.databinding.FragmentDetailProductBinding
-import com.erayerarslan.floreplica.ui.home.ProductAdapter
-import com.erayerarslan.floreplica.util.DetailImage
-import com.erayerarslan.floreplica.util.detailImage
-import com.erayerarslan.floreplica.util.loadImage
+import com.erayerarslan.floreplica.ui.home.adapter.ProductAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,7 +21,7 @@ class DetailProductFragment : Fragment() {
     private var _binding: FragmentDetailProductBinding? = null
     private val binding get() = _binding!!
     private lateinit var detailProductListAdapter: DetailProductListAdapter
-
+    private lateinit var productAdapter: ProductAdapter
     private val viewModel: DetailProductViewModel by viewModels()
     private val args by navArgs<DetailProductFragmentArgs>()
 
@@ -52,6 +48,18 @@ class DetailProductFragment : Fragment() {
             findNavController().navigateUp()
         }
 
+        productAdapter= ProductAdapter({ product ->
+
+            product.id?.let {
+                println(it)
+            }
+        },
+
+            isDetailPage = true
+
+
+        )
+
         detailProductListAdapter = DetailProductListAdapter(
             onProductClick = { product ->
                 val bundle = Bundle().apply {
@@ -62,6 +70,7 @@ class DetailProductFragment : Fragment() {
 
             }
         )
+
 //        val gridLayoutManager = GridLayoutManager(requireContext(), 2)
 //        binding.detailRecyclerView.layoutManager = gridLayoutManager
 //        binding.detailRecyclerView.adapter = detailProductListAdapter
@@ -69,6 +78,11 @@ class DetailProductFragment : Fragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.detailRecyclerView.layoutManager = layoutManager
         binding.detailRecyclerView.adapter = detailProductListAdapter
+        val layoutManager2 =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.detailTopRecyclerview.layoutManager =layoutManager2
+        binding.detailTopRecyclerview.adapter = productAdapter
+
 
 
 
@@ -92,19 +106,20 @@ class DetailProductFragment : Fragment() {
             binding.textViewErrorDetail.isVisible = true
         }
         viewModel.product.observe(viewLifecycleOwner) {
-            binding.imageViewProduct.detailImage(it.image)
-            binding.textViewDetailTitle.text = it.title
-            binding.textRate.text = "Rating: " + it.rating?.rate.toString()
-            binding.ratingBar.rating = it.rating?.rate.toString().toFloat()
+            productAdapter.updateProductDetail(it)
+//            binding.textRate.text = "Rating: " + it.rating?.rate.toString()
+//            binding.ratingBar.rating = it.rating?.rate.toString().toFloat()
+//            binding.textViewDetailDescription.text = it.description
             binding.textViewDetailPrice.text = it.price.toString()
-            binding.textViewDetailDescription.text = it.description
-            binding.backButton.bringToFront()
 
+            binding.backButton.bringToFront()
         }
         viewModel.similarProducts.observe(viewLifecycleOwner) {
             detailProductListAdapter.updateProductList(it)
 
         }
+
+
 
 
     }

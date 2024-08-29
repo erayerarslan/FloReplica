@@ -16,15 +16,19 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FavoriteViewModel @Inject constructor(private val repository: ProductRepository,
-    private val userRepository: UserRepositoryImpl
+    private val userRepository: UserRepositoryImpl,
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+
 ) : ViewModel() {
     val favoriteProducts = MutableLiveData<List<ProductItem>>()
+    private val _emptyFavorite = MutableLiveData<Boolean>()
+    val emptyFavorite: LiveData<Boolean> get() = _emptyFavorite
+    val guestUser = MutableLiveData<Boolean>()
 
     fun getFavoriteProductList() {
         viewModelScope.launch {
 
             try {
-
                 val favoriteIds = userRepository.getFavoriteProductIds()
                 // ürünleri uidye göre al
                 val products = repository.getProductsByIds(favoriteIds)
@@ -33,6 +37,19 @@ class FavoriteViewModel @Inject constructor(private val repository: ProductRepos
                 }
                 // livedataya yolla
                 favoriteProducts.value = products
+                if (favoriteProducts.value.isNullOrEmpty()) {
+                    _emptyFavorite.value = true
+                    if(auth.currentUser?.isAnonymous == true){
+                        guestUser.value = true
+                    }
+                    else{
+                        guestUser.value = false
+                    }
+
+
+                }else{
+                    _emptyFavorite.value = false
+                }
 
             }catch (e: Exception){
 

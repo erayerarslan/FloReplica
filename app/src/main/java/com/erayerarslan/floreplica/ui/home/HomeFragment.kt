@@ -9,10 +9,9 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.erayerarslan.floreplica.MainActivity
-import com.erayerarslan.floreplica.R
 import com.erayerarslan.floreplica.databinding.FragmentHomeBinding
+import com.erayerarslan.floreplica.ui.home.adapter.ProductAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,14 +51,7 @@ class HomeFragment : Fragment() {
             val action =HomeFragmentDirections.actionHomeFragmentToDetailProductFragment(product.id ?: 0)
             findNavController().navigate(action)
 
-        },
-            { product, isFavorite ->
-                if (isFavorite) {
-                        println("favorilere eklendi")
-                } else {
-                    println("favoriden çıkarıldı")
-                }
-            }
+        }
         )
 
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
